@@ -4,11 +4,11 @@ Anagram solver
 Usage
 =====
 
-Database words in plain-text format:
+Database of words in plain-text format:
 ```bash
 	$ ./anagrammer.py --database wordlist.txt --format plain myword
 ```
-Database in XML format and using XPath to extract words from the file:
+Database of words in XML format and using XPath to extract words:
 ```bash
 	$ ./anagrammer.py --database wordlist.xml --xpath ./words myword
 ```
