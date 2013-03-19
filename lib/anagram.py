@@ -14,11 +14,11 @@ class Anagrammer(object):
             print('Loading %s in XML format using XPath %s ' % (database, xpath))
             tree = ET.parse(database)
             root = tree.getroot()
-            self.words = [word.text for word in root.findall(xpath)]
+            self.words = [word.text.lower() for word in root.findall(xpath)]
         elif format == 'plain':
             print('Loading %s in plain-text format')
             file = open(database, 'r')
-            self.words = [line.strip() for line in file.readlines()]
+            self.words = [line.strip().lower() for line in file.readlines()]
             file.close()
         else:
             raise TypeError('Format %s is not supported.' % format)
@@ -26,6 +26,7 @@ class Anagrammer(object):
         print('%d words found.' % len(self.words))
 
     def anagrams(self, word):
+        word = word.strip().lower()
         print("Anagrams for '%s':" % word)
         sword = sorted(word)
         anagrams = [w for w in self.words if sorted(w) == sword]
