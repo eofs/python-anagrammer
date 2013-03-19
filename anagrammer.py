@@ -26,19 +26,33 @@ import argparse
 from lib import Anagrammer
 
 
+class WordAction(argparse.Action):
+    def __call__(self, parser, args, values, options = None):
+        args.words = values
+        if not args.permutations:
+            print("no comb...")
+            if not args.database:
+                parser.error('You need to specify database')
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Find anagrams for given words')
-    parser.add_argument('--database', required=True,
+    parser.add_argument('--database',
                         help='XML file containing list of words')
     parser.add_argument('--xpath', help='XPath used to find words from XML')
     parser.add_argument('--format', default='xml', help='Database format')
+    parser.add_argument('--permutations', action='store_true',
+                        help='Print permutations instead of finding anagrams. Warning! Do not use long words!')
     parser.add_argument('words', type=str, nargs='+',
+                        action=WordAction,
                         help='Find anagrams for given word(s)')
 
     args = parser.parse_args()
 
     grammer = Anagrammer()
-    grammer.loadDatabase(args.database, args.format, args.xpath)
 
     for word in args.words:
-        grammer.anagrams(word)
+        if args.permutations:
+            grammer.permutations(word)
+        else:
+            grammer.loadDatabase(args.database, args.format, args.xpath)
+            grammer.anagrams(word)

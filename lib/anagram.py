@@ -1,3 +1,5 @@
+import itertools
+
 from xml.etree import ElementTree as ET
 
 
@@ -24,7 +26,7 @@ class Anagrammer(object):
         print('%d words found.' % len(self.words))
 
     def anagrams(self, word):
-        print("\nAnagrams for '%s':" % word)
+        print("Anagrams for '%s':" % word)
         sword = sorted(word)
         anagrams = [w for w in self.words if sorted(w) == sword]
         if len(anagrams):
@@ -32,3 +34,11 @@ class Anagrammer(object):
                 print(anagram)
         else:
             print('No anagrams found :(')
+
+    def permutations(self, word):
+        print('Permutations for word %s' % word)
+        r = len(word)
+        combos = (''.join(combo) for combo in itertools.permutations(word, r))
+        for combo in combos:
+            print(combo)
+
