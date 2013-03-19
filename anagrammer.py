@@ -31,13 +31,14 @@ if __name__ == "__main__":
     parser.add_argument('--database', required=True,
                         help='XML file containing list of words')
     parser.add_argument('--xpath', help='XPath used to find words from XML')
+    parser.add_argument('--format', default='xml', help='Database format')
     parser.add_argument('words', type=str, nargs='+',
                         help='Find anagrams for given word(s)')
 
     args = parser.parse_args()
 
     grammer = Anagrammer()
-    grammer.loadDatabase(args.database, args.xpath)
+    grammer.loadDatabase(args.database, args.format, args.xpath)
 
     for word in args.words:
         grammer.anagrams(word)
